@@ -9,11 +9,11 @@
 </p>
 
 <p align="center">
-  <a href="https://luse-rho.vercel.app"><strong>🌐 Try Live Demo: luse-rho.vercel.app</strong></a>
+  <a href="https://luseapp.vercel.app"><strong>🌐 Try Live Demo: luseapp.vercel.app</strong></a>
 </p>
 
 <p align="center">
-  <a href="https://luse-rho.vercel.app"><img src="https://img.shields.io/badge/Deployment-Live%20on%20Vercel-black?style=flat-square&logo=vercel&logoColor=white" alt="Live on Vercel"></a>
+  <a href="https://luseapp.vercel.app"><img src="https://img.shields.io/badge/Deployment-Live%20on%20Vercel-black?style=flat-square&logo=vercel&logoColor=white" alt="Live on Vercel"></a>
   <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white" alt="HTML5">
   <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white" alt="CSS3">
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="JavaScript">
