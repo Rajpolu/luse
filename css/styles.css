@@ -114,9 +114,13 @@ body {
   to { transform: translate3d(6vmax, 4vmax, 0) scale(1.1); }
 }
 
-header, main {
+header {
   position: relative;
-  z-index: 1;
+  z-index: 10;
+}
+
+main {
+  position: relative;
 }
 
 /* Flush top navbar with zero top padding / white space */
@@ -851,6 +855,7 @@ button:disabled {
     backdrop-filter: none;
     box-shadow: none;
     overflow: visible;
+    position: static;
   }
 
   .tabs {
@@ -896,7 +901,7 @@ button:disabled {
     display: block;
     position: fixed;
     inset: 0;
-    z-index: 28;
+    z-index: 30;
     background: rgba(8, 6, 20, 0.58);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
@@ -909,10 +914,10 @@ button:disabled {
     pointer-events: auto;
   }
 
-  /* Centered Modal Dialog for Tabs */
+  /* Centered Modal Dialog for Tabs - in front of scrim */
   .panes {
     position: fixed;
-    z-index: 30;
+    z-index: 40;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -46%) scale(0.96);
@@ -927,11 +932,13 @@ button:disabled {
     box-shadow: 0 24px 80px -10px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--soft2);
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
     transition: opacity 0.22s ease, transform 0.26s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0s 0.26s;
   }
   body.mo .panes {
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
     transform: translate(-50%, -50%) scale(1);
     transition-delay: 0s;
   }
