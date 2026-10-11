@@ -5,17 +5,19 @@
 </p>
 
 <p align="center">
-  <strong>An ultra-fast, dependency-free in-browser studio for crafting professional app icons, logos, and favicon packages.</strong>
+  <strong>A fast, lightweight, dependency-free in-browser studio for creating custom app icons, logos, and favicon packages in seconds.</strong>
 </p>
 
 <p align="center">
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white" alt="HTML5">
+  <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white" alt="CSS3">
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="JavaScript">
   <a href="https://github.com/Rajpolu/luse/stargazers"><img src="https://img.shields.io/github/stars/Rajpolu/luse?style=flat-square&color=ffbe18" alt="GitHub Stars"></a>
   <a href="https://github.com/Rajpolu/luse/network/members"><img src="https://img.shields.io/github/forks/Rajpolu/luse?style=flat-square&color=4f46e5" alt="GitHub Forks"></a>
   <a href="https://github.com/Rajpolu/luse/issues"><img src="https://img.shields.io/github/issues/Rajpolu/luse?style=flat-square&color=22c55e" alt="GitHub Issues"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square" alt="MIT License"></a>
-  <img src="https://img.shields.io/badge/JavaScript-Vanilla%20ES6+-f7df1e?style=flat-square&logo=javascript&logoColor=black" alt="Vanilla JS">
   <img src="https://img.shields.io/badge/Icons-1700%2B%20Lucide-orange?style=flat-square" alt="Lucide Icons">
-  <img src="https://img.shields.io/badge/Build%20Step-None%20(Pure%20Web)-success?style=flat-square" alt="Zero Build">
+  <img src="https://img.shields.io/badge/Build%20Step-None%20(Zero%20Config)-success?style=flat-square" alt="Zero Build">
 </p>
 
 ---
@@ -28,11 +30,31 @@
 
 ---
 
-## ⚡ About This Web App
+## 📌 About Luse
 
-**Luse** is a lightweight, zero-dependency web application designed for developers, indie hackers, designers, and creators who need clean, modern logos and app icons in seconds. 
+> **Short Description**: **Luse** is a client-side icon and logo design studio built with pure **HTML5**, **CSS3**, and **vanilla JavaScript**. It empowers developers, designers, and founders to customize 1,700+ vector icons, fine-tune geometry and typography, preview in real time, and export production assets from favicons up to 4K rasters—instantly in the browser with zero build configuration.
 
-Unlike heavy graphic design suites or subscription-gated tools, Luse runs **entirely client-side in your browser** with zero build configuration, no Node.js build pipeline, and no telemetry. It combines vector precision with an intuitive, tactile interface featuring draggable scrubbers, real-time HSV color pickers, curated typographic presets, 3D stage tilt effects, and an export engine that renders assets from favicons up to crisp 4K rasters.
+Unlike complex graphics software or subscription-gated tools, Luse requires no account, sends no telemetry, and has zero server dependencies. Everything runs locally in your browser with microsecond responsiveness.
+
+---
+
+## 🔍 Focused SEO Keywords
+
+`logo-maker` · `icon-generator` · `favicon-generator` · `app-icon-creator` · `svg-logo-designer` · `html5` · `css3` · `javascript` · `vanilla-js` · `lucide-icons` · `web-design-tools` · `indie-hacker-tools` · `branding-generator` · `developer-tools` · `open-source`
+
+---
+
+## 💻 Languages & Tech Stack
+
+Luse is deliberately engineered with standard web platform technologies without frameworks, bundlers, or transpilers:
+
+| Technology | Implementation & Purpose |
+| :--- | :--- |
+| **HTML5** | Semantic document outline, accessible modal dialogs (`aria-*` roles, focus management), embedded responsive SVG vector viewport (`geometricPrecision`), and canvas rendering targets. |
+| **CSS3** | Modern responsive layout via CSS Grid & Flexbox, CSS Custom Properties (variables) for dynamic light/dark theming, glassmorphism backdrops, tactile interactive scrubber styles, and 3D perspective transforms. |
+| **JavaScript (ES6+)** | Pure vanilla JavaScript application engine managing real-time SVG DOM generation, HSV color math, pointer capture drag handlers, requestAnimationFrame batched rendering, undo/redo state stacks, and HTML5 Canvas rasterization. |
+| **Lucide Icons** | Complete offline vector symbol library (1,700+ icons) licensed under ISC. |
+| **JSZip** | Fast in-browser ZIP generation for multi-resolution favicon asset packaging. |
 
 ---
 
@@ -82,7 +104,7 @@ Unlike heavy graphic design suites or subscription-gated tools, Luse runs **enti
 ## 🚀 How to Use It
 
 ### Option 1: Open Directly
-Because Luse is entirely self-contained with no build steps, you can simply open the `index.html` file in any modern web browser:
+Because Luse is entirely self-contained with no build steps, you can simply open `index.html` in any modern web browser:
 
 ```bash
 # macOS
@@ -96,7 +118,7 @@ start index.html
 ```
 
 ### Option 2: Run a Local Static Server
-To avoid local file URL limitations and enable full web capabilities (like the EyeDropper API and clipboard permissions), serve the directory with any static server:
+To avoid local file URL limitations and enable full web capabilities (such as the EyeDropper API and clipboard permissions), serve the directory with any static server:
 
 ```bash
 # Using Python 3
@@ -108,7 +130,7 @@ npx serve .
 # Using PHP
 php -S localhost:8000
 ```
-Then visit **`http://localhost:8000`** in your browser.
+Then open **`http://localhost:8000`** in your browser.
 
 ---
 
@@ -126,11 +148,11 @@ Then visit **`http://localhost:8000`** in your browser.
 
 ```text
 luse/
-├── index.html            # Main application layout and markup
+├── index.html            # Main application layout, SEO metadata, and semantic markup
 ├── css/
-│   └── styles.css        # Clean responsive styles, themes, and CSS custom properties
+│   └── styles.css        # Responsive CSS3 styling, custom properties, and themes
 ├── js/
-│   ├── app.js            # Core application state, scrubber logic, and render engine
+│   ├── app.js            # Pure vanilla JavaScript app engine, HSV math, and canvas export
 │   └── vendor/
 │       ├── lucide.min.js # Lucide Icons v0.460.0 (offline vector icon library)
 │       └── jszip.min.js  # JSZip v3.10.1 (client-side favicon ZIP generator)
@@ -139,7 +161,7 @@ luse/
 │   ├── favicon.svg       # Studio favicon
 │   └── screenshot.png    # High-resolution retina preview
 ├── LICENSE               # MIT License
-└── README.md             # Documentation
+└── README.md             # Documentation, SEO keywords, and guides
 ```
 
 ---
@@ -159,8 +181,8 @@ Contributions, ideas, and bug reports are welcome! To contribute:
    git checkout -b feature/amazing-feature
    ```
 4. **Make Your Changes**:
-   - Keep the application dependency-free and lightweight.
-   - Maintain vanilla JavaScript and standard CSS.
+   - Keep the application dependency-free, lightweight, and performant.
+   - Maintain pure vanilla JavaScript (no framework runtime) and clean CSS3.
    - Test across modern browsers (Chrome/Brave, Firefox, Safari) and mobile viewport sizes.
 5. **Commit Your Changes**:
    ```bash
