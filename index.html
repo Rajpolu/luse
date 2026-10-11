@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<meta name="description" content="Luse – free icon logo studio">
+<title>Luse – icon logo studio</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="blob a"></div><div class="blob b"></div>
+<header>
+  <div class="brand">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><defs>
+      <linearGradient id="g1" x1="6" y1="4" x2="58" y2="62" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2b1d6b"/><stop offset="1" stop-color="#080520"/></linearGradient>
+      <linearGradient id="g2" x1="20" y1="14" x2="46" y2="48" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#b9a7ff"/></linearGradient>
+      <radialGradient id="g3" cx=".3" cy=".06" r=".95"><stop offset="0" stop-color="#fff" stop-opacity=".3"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/></radialGradient>
+      <radialGradient id="g4"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="#ffe29a"/><stop offset="1" stop-color="#ff7ab8" stop-opacity="0"/></radialGradient></defs>
+      <rect x="2" y="2" width="60" height="60" rx="18" fill="url(#g1)"/>
+      <rect x="2" y="2" width="60" height="60" rx="18" fill="url(#g3)"/>
+      <circle cx="44" cy="22" r="13" fill="url(#g4)" opacity=".55"/>
+      <path d="M23 14V43Q23 45 25 45H43" fill="none" stroke="url(#g2)" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="44" cy="22" r="4.2" fill="#fff"/></svg>
+    <span class="wm">Luse</span>
+  </div>
+  <div class="row" style="gap:6px;align-items:center"><a href="https://github.com/rajpolu" target="_blank" rel="noopener">Created by RajPolu</a><button class="ib" id="thm"></button></div>
+</header>
+<div class="scrim" id="scrim"></div>
+<main class="shell">
+<section class="stage" aria-label="Canvas">
+  <div id="tilt"><div id="wrap"><svg id="pv" viewBox="0 0 512 512"><defs><linearGradient id="pgr"><stop id="st1" offset="0"/><stop id="st2" offset="1"/></linearGradient></defs><rect id="pr" width="512" height="512"/><g id="pg" stroke-linecap="round" stroke-linejoin="round"></g><text id="pt" x="256" text-anchor="middle" font-family="Inter,Helvetica,Arial,sans-serif" font-weight="800"></text></svg></div></div>
+  <div class="tools" role="toolbar" aria-label="Canvas tools"><button class="ib" id="undo" data-ic="Undo2" aria-label="Undo (Ctrl+Z)" title="Undo (Ctrl+Z)"></button><button class="ib" id="redo" data-ic="Redo2" aria-label="Redo (Ctrl+Shift+Z)" title="Redo (Ctrl+Shift+Z)"></button><i class="sep"></i><button class="ib" id="rnd" data-ic="Shuffle" aria-label="Randomize" title="Randomize"></button><button class="ib" id="tr" data-ic="Layers" aria-label="Transparent background" title="Transparent background"></button><i class="sep"></i><button class="ib" id="save" data-ic="Bookmark" aria-label="Save design" title="Save design"></button><button class="ib" id="share" data-ic="Link" aria-label="Copy share link" title="Copy share link"></button></div>
+</section>
+<aside class="panel">
+  <nav class="tabs" role="tablist" aria-label="Editor sections"><button role="tab" data-tab="icon" data-ic="Shapes" class="on ic-ctl" aria-selected="true"><span>Icon</span></button><button role="tab" data-tab="adjust" data-ic="SlidersHorizontal" aria-selected="false"><span>Adjust</span></button><button role="tab" data-tab="style" data-ic="Palette" aria-selected="false"><span>Style</span></button><button role="tab" data-tab="text" data-ic="Type" aria-selected="false"><span>Text</span></button><button role="tab" data-tab="export" data-ic="Download" aria-selected="false"><span>Export</span></button></nav>
+  <div class="panes" id="panes" role="group" aria-label="Editor panel"><div class="mh" id="mh"><span class="mtl"><span id="mth" aria-hidden="true"></span><span id="mt">Icon</span></span><button class="ib" id="mx" data-ic="X" aria-label="Close panel"></button></div>
+  <div class="pane on" data-pane="icon" role="tabpanel"><input type="search" id="q" placeholder="Search icons…" aria-label="Search icons"><div class="meta"><a id="ilink" target="_blank" rel="noopener"></a><span id="icount"></span></div><div id="icons"></div></div>
+  <div class="pane" data-pane="adjust" role="tabpanel"><div id="sliders" class="stk ic-ctl"></div><div id="slr" class="stk"></div><div class="ctl"><label>Shape</label><div class="seg" id="shape"><button data-r="0">Square</button><button data-r="96">Squircle</button><button data-r="256">Circle</button></div></div><small class="note">Drag a bar to scrub · Shift for fine control · double-click to type</small></div>
+  <div class="pane" data-pane="style" role="tabpanel"><div class="ctl"><label>Presets</label><div class="presets" id="presets"></div></div><div class="ctl"><label>Saved designs</label><div class="svl" id="saved"></div></div><div class="cols"><div class="ctl ic-ctl"><label>Border</label><button class="sw" data-k="bc"><i></i><span></span></button></div><div class="ctl ic-ctl"><label>Fill</label><button class="sw" data-k="fc"><i></i><span></span></button></div><div class="ctl"><label>Background</label><button class="sw" data-k="bg"><i></i><span></span></button></div></div><div class="ctl"><label>Gradients</label><div class="presets" id="grads"></div></div><div class="gd-ctl stk"><div class="cols"><div class="ctl"><label>Gradient to</label><button class="sw" data-k="g2"><i></i><span></span></button></div></div><div id="slg" class="stk"></div></div></div>
+  <div class="pane" data-pane="text" role="tabpanel"><div class="ctl"><label>Logo type</label><div class="seg" id="mode"><button data-v="icon">Icon</button><button data-v="both">Icon + Text</button><button data-v="text">Text</button></div></div>
+  <div class="tx-ctl stk" style="gap:16px"><input type="search" id="tx" placeholder="Logo text" maxlength="40" aria-label="Logo text">
+  <div class="ctl"><label>Font presets</label><div class="fonts" id="fonts"></div></div>
+  <div class="ctl"><label>Weight</label><div class="seg" id="fw"><button data-v="400">Regular</button><button data-v="700">Bold</button><button data-v="900">Black</button></div></div>
+  <div id="slt" class="stk"></div>
+  <div class="cols"><div class="ctl"><label>Color</label><button class="sw" data-k="tc"><i></i><span></span></button></div><div class="ctl"><label>Case</label><button class="tg" id="uc" data-ic="CaseUpper" aria-pressed="false"><span>Upper</span></button></div></div></div></div>
+  <div class="pane" data-pane="export" role="tabpanel"><div class="ctl"><label>Format</label><div class="seg" id="fmt"><button data-v="png" class="on">PNG</button><button data-v="webp">WebP</button><button data-v="jpg">JPG</button><button data-v="svg">SVG</button></div></div><div class="ctl" id="resw"><label>Resolution</label><div class="seg" id="res"><button data-v="512">512</button><button data-v="1024">1K</button><button data-v="2048" class="on">2K</button><button data-v="4096">4K</button></div></div><div id="slm" class="stk"></div><button class="primary btn" id="dl" data-ic="Download"><span id="dlt">Export</span></button><div class="row2"><button class="btn" id="cps" data-ic="Copy"><span>Copy SVG</span></button><button class="btn" id="cpp" data-ic="Image"><span>Copy PNG</span></button><button class="btn" id="fav" data-ic="Package"><span>Favicon pack (.zip)</span></button></div><div id="msg" role="status"></div><small class="note">Icons by <a href="https://lucide.dev" target="_blank" rel="noopener">Lucide</a> · ISC License</small></div>
+  </div>
+</aside>
+</main>
+<div id="pop" hidden>
+  <div id="sv"><div class="knob"></div></div><div id="hue"><div class="knob"></div></div>
+  <div class="hexrow"><input id="hex" maxlength="7" spellcheck="false"><button id="eye" class="ib" title="Pick from screen" aria-label="Pick color from screen" data-ic="Pipette"></button></div>
+  <div id="pal"></div>
+</div>
+<script src="js/vendor/lucide.min.js"></script>
+<script src="js/vendor/jszip.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
