@@ -15,7 +15,7 @@
   --gd: rgba(124, 58, 237, 0.5);
   --ck1: #d4d2d8;
   --ck2: #efeef2;
-  --nav: 54px;
+  --nav: 52px;
   color-scheme: light;
 }
 
@@ -74,6 +74,7 @@ html {
 
 body {
   margin: 0;
+  padding: 0;
   height: 100%;
   height: 100dvh;
   min-height: 100dvh;
@@ -118,56 +119,63 @@ header, main {
   z-index: 1;
 }
 
+/* Flush top navbar with zero top padding / white space */
 header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: max(10px, env(safe-area-inset-top, 0px)) max(18px, env(safe-area-inset-right, 0px)) 10px max(18px, env(safe-area-inset-left, 0px));
-  gap: 10px;
+  padding: 0 16px;
+  height: 48px;
+  min-height: 48px;
+  margin: 0;
   width: 100%;
 }
 
+/* Resized, balanced brand logo and brand name */
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-weight: 700;
-  font-size: 19px;
-  letter-spacing: -0.02em;
+  gap: 8px;
   min-width: 0;
 }
 .brand svg {
-  width: 36px;
-  height: 36px;
+  width: 28px;
+  height: 28px;
   flex: none;
-  filter: drop-shadow(0 10px 18px rgba(124, 58, 237, 0.45));
+  filter: drop-shadow(0 8px 14px rgba(124, 58, 237, 0.45));
 }
 .wm {
-  font-size: 21px;
+  font-size: 18px;
   font-weight: 800;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.04em;
   background: linear-gradient(120deg, var(--ink) 30%, #a855f7 75%, #ec4899);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
+/* Header actions with author credit at top right edge */
 .header-actions {
   display: flex;
   align-items: center;
   gap: 8px;
+  margin-left: auto;
   flex: none;
 }
 .author-tag {
   color: var(--mute);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   text-decoration: none;
-  transition: color 0.25s;
+  padding: 5px 10px;
+  border-radius: 9px;
+  background: var(--soft);
+  transition: color 0.2s, background 0.2s;
   white-space: nowrap;
 }
 .author-tag:hover {
   color: var(--ink);
+  background: var(--soft2);
 }
 
 main {
@@ -178,7 +186,7 @@ main {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 16px 16px;
+  padding: 0 16px 14px;
 }
 
 .stage, .panel {
@@ -198,7 +206,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 0 52px;
+  padding: 0 0 50px;
   background-color: var(--cv);
   background-image:
     radial-gradient(ellipse at center, transparent 50%, var(--cv) 100%),
@@ -220,12 +228,12 @@ main {
 .stage::before {
   left: 50%;
   top: 0;
-  bottom: 52px;
+  bottom: 50px;
   width: 1px;
   background: repeating-linear-gradient(var(--gd) 0 6px, transparent 6px 12px);
 }
 .stage::after {
-  top: calc((100% - 52px) / 2);
+  top: calc((100% - 50px) / 2);
   left: 0;
   right: 0;
   height: 1px;
@@ -344,13 +352,13 @@ button.primary:hover {
   flex: none;
 }
 .ib {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   padding: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
+  border-radius: 11px;
   background: transparent;
 }
 .ib.on, .tg.on {
@@ -562,7 +570,7 @@ button.primary:hover {
 /* Color Popover */
 #pop {
   position: fixed;
-  z-index: 40;
+  z-index: 50;
   width: 248px;
   background: var(--glass);
   -webkit-backdrop-filter: blur(30px) saturate(1.5);
@@ -805,27 +813,29 @@ button:disabled {
    ------------------------------------------------------------- */
 @media (max-width: 1024px) {
   header {
-    padding: max(8px, env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) 8px max(12px, env(safe-area-inset-left, 0px));
+    padding: 0 12px;
+    height: 44px;
+    min-height: 44px;
   }
 
   main {
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: minmax(0, 1fr) auto;
-    padding: 0 10px max(10px, env(safe-area-inset-bottom, 0px));
+    padding: 0 10px 10px;
     gap: 8px;
     width: 100%;
     max-width: 100%;
   }
 
   .stage {
-    padding: 0 0 46px;
+    padding: 0 0 44px;
     border-radius: 20px;
   }
   .stage::before {
-    bottom: 46px;
+    bottom: 44px;
   }
   .stage::after {
-    top: calc((100% - 46px) / 2);
+    top: calc((100% - 44px) / 2);
   }
 
   #tilt {
@@ -846,20 +856,20 @@ button:disabled {
   .tabs {
     order: 0;
     width: 100%;
-    max-width: 540px;
+    max-width: 520px;
     margin: 0 auto;
     background: var(--glass);
     -webkit-backdrop-filter: blur(24px) saturate(1.4);
     backdrop-filter: blur(24px) saturate(1.4);
     box-shadow: var(--sh);
     border-radius: 18px;
-    padding: 4px;
+    padding: 3px;
     gap: 2px;
     position: relative;
     z-index: 16;
   }
   .tabs button {
-    min-height: 44px;
+    min-height: 42px;
     padding: 4px 2px;
     font-size: 10px;
     border-radius: 12px;
@@ -881,50 +891,48 @@ button:disabled {
     font-weight: 700;
   }
 
-  /* Scrim backdrop */
+  /* Scrim backdrop for Modal */
   .scrim {
     display: block;
     position: fixed;
     inset: 0;
-    z-index: 20;
-    background: rgba(10, 8, 25, 0.45);
-    -webkit-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
+    z-index: 28;
+    background: rgba(8, 6, 20, 0.58);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.25s ease;
+    transition: opacity 0.22s ease;
   }
   body.mo .scrim {
     opacity: 1;
     pointer-events: auto;
   }
 
-  /* Bottom sheet modal for mobile & tablet */
+  /* Centered Modal Dialog for Tabs */
   .panes {
     position: fixed;
-    z-index: 25;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    width: min(540px, calc(100% - 16px));
-    bottom: calc(var(--nav) + max(10px, env(safe-area-inset-bottom, 0px)));
-    max-height: min(56dvh, 500px);
+    z-index: 30;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -46%) scale(0.96);
+    margin: 0;
+    width: min(540px, calc(100% - 24px));
+    max-height: min(78dvh, 580px);
     overflow-y: auto;
     overscroll-behavior: contain;
-    padding: 0 16px 16px;
-    border-radius: 22px;
+    padding: 0 18px 18px;
+    border-radius: 24px;
     background: var(--bg);
-    box-shadow: 0 20px 60px -10px rgba(0, 0, 0, 0.45), 0 0 0 1px var(--soft2);
+    box-shadow: 0 24px 80px -10px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--soft2);
     opacity: 0;
     visibility: hidden;
-    transform: translateY(18px) scale(0.98);
-    transform-origin: 50% 100%;
-    transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0s 0.3s;
+    transition: opacity 0.22s ease, transform 0.26s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0s 0.26s;
   }
   body.mo .panes {
     opacity: 1;
     visibility: visible;
-    transform: none;
+    transform: translate(-50%, -50%) scale(1);
     transition-delay: 0s;
   }
 
@@ -935,22 +943,13 @@ button:disabled {
     position: sticky;
     top: 0;
     z-index: 2;
-    padding: 14px 0 8px;
+    padding: 16px 0 10px;
     background: var(--bg);
     font-weight: 700;
-    font-size: 15px;
-    touch-action: none;
+    font-size: 16px;
   }
   .mh::before {
-    content: '';
-    position: absolute;
-    top: 5px;
-    left: 50%;
-    width: 36px;
-    height: 4px;
-    margin-left: -18px;
-    border-radius: 2px;
-    background: var(--soft2);
+    display: none; /* No drag handle for modal dialog */
   }
   .mtl {
     display: flex;
@@ -969,29 +968,31 @@ button:disabled {
   }
   #icons {
     flex: none;
-    max-height: min(28dvh, 220px);
+    max-height: min(34dvh, 260px);
   }
 }
 
 /* Small phone devices (<= 480px) */
 @media (max-width: 480px) {
-  .brand {
-    font-size: 17px;
-    gap: 8px;
+  header {
+    padding: 0 10px;
+    height: 42px;
+    min-height: 42px;
   }
   .brand svg {
-    width: 30px;
-    height: 30px;
+    width: 24px;
+    height: 24px;
   }
   .wm {
-    font-size: 18px;
+    font-size: 16px;
   }
   .author-tag {
     font-size: 11px;
+    padding: 4px 8px;
   }
   #thm {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
   }
 
   .tools {
@@ -1015,13 +1016,20 @@ button:disabled {
   }
 
   .stage {
-    padding: 0 0 42px;
+    padding: 0 0 40px;
   }
   .stage::before {
-    bottom: 42px;
+    bottom: 40px;
   }
   .stage::after {
-    top: calc((100% - 42px) / 2);
+    top: calc((100% - 40px) / 2);
+  }
+
+  .panes {
+    width: calc(100% - 16px);
+    max-height: min(82dvh, 560px);
+    padding: 0 14px 16px;
+    border-radius: 20px;
   }
 
   #pop {
@@ -1029,24 +1037,25 @@ button:disabled {
     top: 50% !important;
     transform: translate(-50%, -50%) !important;
     width: min(280px, calc(100vw - 32px));
-    z-index: 50;
-    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--soft2);
+    z-index: 60;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.65), 0 0 0 1px var(--soft2);
   }
 }
 
-/* Extra small phones (<= 360px) */
-@media (max-width: 360px) {
+/* Extra small phones (<= 340px) */
+@media (max-width: 340px) {
   .author-tag {
-    display: none;
+    font-size: 10px;
+    padding: 3px 6px;
   }
   .tools .ib {
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
   }
 }
 
 @media (prefers-reduced-transparency: reduce) {
-  .stage, .panel, #pop, .tools, .tabs {
+  .stage, .panel, #pop, .tools, .tabs, .panes {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
     background: var(--bg);
