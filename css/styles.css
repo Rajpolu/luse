@@ -899,25 +899,25 @@ button:disabled {
     font-weight: 700;
   }
 
-  /* Scrim backdrop for Modal */
+  /* Scrim backdrop for Modal - buttery soft, immersive */
   .scrim {
     display: block;
     position: fixed;
     inset: 0;
     z-index: 30;
-    background: rgba(8, 6, 20, 0.58);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
+    background: rgba(8, 6, 20, 0.62);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    backdrop-filter: blur(14px) saturate(1.2);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.22s ease;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
   body.mo .scrim {
     opacity: 1;
     pointer-events: auto;
   }
 
-  /* Centered Modal Dialog for Tabs - in front of scrim */
+  /* Centered Modal Dialog for Tabs - borderless, silky smooth & immersive */
   .panes {
     position: fixed;
     z-index: 40;
@@ -925,18 +925,20 @@ button:disabled {
     left: 50%;
     transform: translate(-50%, -46%) scale(0.96);
     margin: 0;
-    width: min(540px, calc(100% - 24px));
-    max-height: min(78dvh, 580px);
+    width: min(540px, calc(100% - 20px));
+    max-height: min(84dvh, 660px);
     overflow-y: auto;
     overscroll-behavior: contain;
-    padding: 0 18px 18px;
-    border-radius: 24px;
+    padding: 0 20px 20px;
+    border-radius: 28px;
+    border: none;
+    outline: none;
     background: var(--bg);
-    box-shadow: 0 24px 80px -10px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--soft2);
+    box-shadow: 0 32px 90px -10px rgba(0, 0, 0, 0.65), 0 10px 30px -5px rgba(0, 0, 0, 0.3);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.22s ease, transform 0.26s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0s 0.26s;
+    transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s 0.32s;
   }
   body.mo .panes {
     opacity: 1;
@@ -953,10 +955,11 @@ button:disabled {
     position: sticky;
     top: 0;
     z-index: 2;
-    padding: 16px 0 10px;
+    padding: 16px 0 12px;
     background: var(--bg);
     font-weight: 700;
     font-size: 16px;
+    border: none;
   }
   .mh::before {
     display: none; /* No drag handle for modal dialog */
@@ -978,7 +981,8 @@ button:disabled {
   }
   #icons {
     flex: none;
-    max-height: min(34dvh, 260px);
+    max-height: min(56dvh, 460px);
+    scrollbar-width: thin;
   }
 }
 
@@ -1036,10 +1040,15 @@ button:disabled {
   }
 
   .panes {
-    width: calc(100% - 16px);
-    max-height: min(82dvh, 560px);
-    padding: 0 14px 16px;
-    border-radius: 20px;
+    width: calc(100% - 14px);
+    max-height: min(86dvh, 600px);
+    padding: 0 16px 18px;
+    border-radius: 24px;
+    border: none;
+    box-shadow: 0 28px 80px -8px rgba(0, 0, 0, 0.7), 0 8px 24px -4px rgba(0, 0, 0, 0.35);
+  }
+  #icons {
+    max-height: min(52dvh, 380px);
   }
 
   #pop {
