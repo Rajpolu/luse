@@ -831,6 +831,7 @@ body.imo .iscrim {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  font-weight: 400;
   transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s 0.32s;
 }
 body.imo .imodal {
@@ -860,18 +861,19 @@ body.imo .imodal {
 .ibrand h2 {
   margin: 0;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.2;
 }
 .ibrand small {
   color: var(--mute);
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 400;
 }
 .idesc {
   margin: 0;
   font-size: 12px;
+  font-weight: 400;
   line-height: 1.48;
   color: var(--mute);
 }
@@ -904,6 +906,7 @@ body.imo .imodal {
 }
 .icard span {
   font-size: 11px;
+  font-weight: 400;
   line-height: 1.4;
   color: var(--mute);
 }
@@ -913,11 +916,12 @@ body.imo .imodal {
   justify-content: space-between;
   padding-top: 4px;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--mute);
 }
 .ifoot a {
   color: var(--ink);
+  font-weight: 500;
   text-decoration: none;
 }
 .ifoot a:hover {
