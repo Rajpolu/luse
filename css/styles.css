@@ -130,7 +130,7 @@ header {
 }
 .wm {
   font-size: 22px;
-  font-weight: 600;
+  font-weight: 800;
   letter-spacing: -0.04em;
   background: linear-gradient(120deg, var(--ink) 30%, #a855f7 75%, #ec4899);
   -webkit-background-clip: text;
