@@ -59,7 +59,7 @@ body {
   min-height: 100dvh;
   background: var(--bg);
   color: var(--ink);
-  font-family: Inter, "SF Pro Display", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-weight: 600;
   line-height: 1.4;
   overflow: hidden;
@@ -783,7 +783,7 @@ button:disabled {
   font-weight: inherit;
 }
 .fchip small {
-  font: 600 11px Inter, system-ui, sans-serif;
+  font: 600 11px -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   color: var(--mute);
 }
 .fchip.on {
