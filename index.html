@@ -38,7 +38,7 @@
       <circle cx="44" cy="22" r="4.2" fill="#fff"/></svg>
     <span class="wm">Luse</span>
   </div>
-  <div class="header-actions"><a href="https://github.com/rajpolu" target="_blank" rel="noopener" class="author-tag">Created by RajPolu</a><button class="ib" id="thm" aria-label="Toggle theme"></button></div>
+  <div class="header-actions"><a href="https://github.com/rajpolu" target="_blank" rel="noopener" class="author-tag">Built by RajPolu</a><button class="ib" id="inf" data-ic="Info" aria-label="About Luse" title="About Luse"></button><button class="ib" id="thm" aria-label="Toggle theme"></button></div>
 </header>
 <main class="shell">
 <section class="stage" aria-label="Canvas">
@@ -62,6 +62,27 @@
   </div>
 </aside>
 </main>
+<div class="iscrim" id="iscrim"></div>
+<div class="imodal" id="imodal" role="dialog" aria-modal="true" aria-labelledby="ititle">
+  <div class="imh">
+    <div class="ibrand">
+      <img src="assets/favicon.svg" alt="Luse" width="32" height="32">
+      <div><h2 id="ititle">About Luse</h2><small>In-Browser Icon &amp; Logo Studio</small></div>
+    </div>
+    <button class="ib" id="ix" data-ic="X" aria-label="Close modal"></button>
+  </div>
+  <p class="idesc">Luse is an ultra-fast, zero-dependency design studio for crafting custom app icons, vector logos, and complete favicon packages directly in your browser.</p>
+  <div class="igrid">
+    <div class="icard"><b data-ic="Shapes">1,700+ Vector Icons</b><span>Browse and customize the complete Lucide icon library with precision stroke, fill, and rotation controls.</span></div>
+    <div class="icard"><b data-ic="Palette">Rich Styling &amp; Gradients</b><span>Apply curated presets, multi-stop gradients, squircle geometry, or transparent backdrops.</span></div>
+    <div class="icard"><b data-ic="Type">Studio Typography</b><span>Combine icons with 6 expressive font presets, adjustable weights, kerning, and scaling.</span></div>
+    <div class="icard"><b data-ic="Zap">Millisecond Export</b><span>Instantaneous 4K PNG, WebP, JPG, vector SVG, and one-click multi-size Favicon (.zip) packs.</span></div>
+  </div>
+  <div class="ifoot">
+    <span>Built by <a href="https://github.com/rajpolu" target="_blank" rel="noopener">RajPolu</a></span>
+    <span>100% Client-Side · Privacy First</span>
+  </div>
+</div>
 <div id="pop" hidden>
   <div id="sv"><div class="knob"></div></div><div id="hue"><div class="knob"></div></div>
   <div class="hexrow"><input id="hex" maxlength="7" spellcheck="false"><button id="eye" class="ib" title="Pick from screen" aria-label="Pick color from screen" data-ic="Pipette"></button></div>
