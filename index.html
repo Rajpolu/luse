@@ -83,31 +83,22 @@
     <span>100% Client-Side · Privacy First</span>
   </div>
 </div>
-<div class="tscrim" id="tscrim"></div>
-<div class="tmodal" id="tmodal" role="dialog" aria-modal="true" aria-labelledby="ttitle">
-  <div class="imh">
-    <div class="ibrand">
-      <div><h2 id="ttitle">Appearance</h2><small>Choose your preferred studio theme</small></div>
-    </div>
-    <button class="ib" id="txx" data-ic="X" aria-label="Close theme modal"></button>
-  </div>
-  <div class="tlist" id="tlist" role="radiogroup" aria-labelledby="ttitle">
-    <button class="topt" data-th="system" role="radio" aria-checked="true">
-      <span class="tico" data-ic="Monitor"></span>
-      <span class="ttxt"><b>System</b><small>Sync automatically with your device</small></span>
-      <span class="tchk" data-ic="Check"></span>
-    </button>
-    <button class="topt" data-th="light" role="radio" aria-checked="false">
-      <span class="tico" data-ic="Sun"></span>
-      <span class="ttxt"><b>Light</b><small>Bright, warm day-time workspace</small></span>
-      <span class="tchk" data-ic="Check"></span>
-    </button>
-    <button class="topt" data-th="dark" role="radio" aria-checked="false">
-      <span class="tico" data-ic="Moon"></span>
-      <span class="ttxt"><b>Dark</b><small>Deep, high-contrast studio mode</small></span>
-      <span class="tchk" data-ic="Check"></span>
-    </button>
-  </div>
+<div class="tpop" id="tpop" role="menu" aria-label="Appearance">
+  <button class="topt" data-th="system" role="menuitemradio" aria-checked="true">
+    <span class="tico" data-ic="Monitor"></span>
+    <span class="ttxt">System</span>
+    <span class="tchk" data-ic="Check"></span>
+  </button>
+  <button class="topt" data-th="light" role="menuitemradio" aria-checked="false">
+    <span class="tico" data-ic="Sun"></span>
+    <span class="ttxt">Light</span>
+    <span class="tchk" data-ic="Check"></span>
+  </button>
+  <button class="topt" data-th="dark" role="menuitemradio" aria-checked="false">
+    <span class="tico" data-ic="Moon"></span>
+    <span class="ttxt">Dark</span>
+    <span class="tchk" data-ic="Check"></span>
+  </button>
 </div>
 <div id="pop" hidden>
   <div id="sv"><div class="knob"></div></div><div id="hue"><div class="knob"></div></div>

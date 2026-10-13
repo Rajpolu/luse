@@ -338,28 +338,28 @@ function eff(){return(th==='light'||th==='dark')?th:(dq.matches?'dark':'light');
 function setTh(){
   var e=eff(),icMap={system:'Monitor',light:'Sun',dark:'Moon'},lbMap={system:'System',light:'Light',dark:'Dark'};
   document.documentElement.setAttribute('data-theme',e);
+  document.documentElement.style.colorScheme=e;
   $('thm').innerHTML=ic(icMap[th]||'Monitor');
   var l='Appearance: '+(lbMap[th]||'System');
   $('thm').setAttribute('aria-label',l);
   $('thm').title=l;
-  document.querySelectorAll('#tlist .topt').forEach(function(b){
+  document.querySelectorAll('#tpop .topt').forEach(function(b){
     var on=b.dataset.th===th;
     b.classList.toggle('on',on);
     b.setAttribute('aria-checked',on?'true':'false');
   });
 }
-function tmo(on){document.body.classList.toggle('tmo',on);if(on){imo(false);mo(false);setTimeout(function(){$('txx').focus({preventScroll:true});},60);}}
-$('thm').addEventListener('click',function(){tmo(!document.body.classList.contains('tmo'));});
-$('txx').addEventListener('click',function(){tmo(false);});
-$('tscrim').addEventListener('pointerdown',function(){tmo(false);});
-$('tlist').addEventListener('click',function(e){
+function tmo(on){document.body.classList.toggle('tmo',on);$('thm').setAttribute('aria-expanded',on?'true':'false');if(on)imo(false);}
+$('thm').addEventListener('click',function(e){e.stopPropagation();tmo(!document.body.classList.contains('tmo'));});
+$('tpop').addEventListener('click',function(e){
   var b=e.target.closest('.topt');
   if(!b)return;
   th=b.dataset.th;
   try{localStorage.setItem('sg-th',th);}catch(err){}
   setTh();
-  setTimeout(function(){tmo(false);},160);
+  setTimeout(function(){tmo(false);},120);
 });
+document.addEventListener('pointerdown',function(e){if(document.body.classList.contains('tmo')&&!$('tpop').contains(e.target)&&!$('thm').contains(e.target))tmo(false);});
 if(dq.addEventListener)dq.addEventListener('change',function(){if(th==='system')setTh();});setTh();
 var GR=[{a:'#ff9a3c',b:'#ff3d81',g:135,k:'#ffffff'},{a:'#22d3ee',b:'#2563eb',g:135,k:'#ffffff'},{a:'#34d399',b:'#6366f1',g:150,k:'#ffffff'},{a:'#a855f7',b:'#4338ca',g:135,k:'#ffffff'},{a:'#ffe5d0',b:'#ffb199',g:135,k:'#3b1d12'},{a:'#2a2a3c',b:'#0b0b12',g:160,k:'#ffffff'},{a:'#d9f99d',b:'#34d399',g:135,k:'#06402b'},{a:'#f9a8d4',b:'#f43f5e',g:135,k:'#ffffff'}],GN=['Sunset','Ocean','Aurora','Grape','Peach','Midnight','Mint','Candy'];
 $('grads').innerHTML='<button class="pre" aria-label="Solid background" title="Solid"></button>'+GR.map(function(g,i){return'<button class="pre" title="'+GN[i]+'" aria-label="'+GN[i]+' gradient" style="background:linear-gradient(135deg,'+g.a+','+g.b+')"></button>';}).join('');

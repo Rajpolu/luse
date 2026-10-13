@@ -1,4 +1,5 @@
-:root {
+:root,
+:root[data-theme="light"] {
   --bg: #f3f0ec;
   --ink: #17161c;
   --mute: #5f5c6b;
@@ -814,7 +815,7 @@ button:disabled {
   display: none;
 }
 
-/* Info / About Modal (All devices - borderless, buttery smooth, immersive) */
+/* Info / About Modal (All devices - compact, borderless, buttery smooth) */
 .iscrim {
   position: fixed;
   inset: 0;
@@ -836,11 +837,11 @@ body.imo .iscrim {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -46%) scale(0.95);
-  width: min(460px, calc(100% - 24px));
-  max-height: min(86dvh, 620px);
+  width: min(410px, calc(100% - 24px));
+  max-height: min(84dvh, 560px);
   overflow-y: auto;
-  padding: 22px;
-  border-radius: 28px;
+  padding: 18px;
+  border-radius: 24px;
   border: none;
   outline: none;
   background: var(--bg);
@@ -850,7 +851,7 @@ body.imo .iscrim {
   pointer-events: none;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s 0.32s;
 }
 body.imo .imodal {
@@ -864,75 +865,75 @@ body.imo .imodal {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
 }
 .ibrand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 .ibrand img {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
   flex: none;
 }
 .ibrand h2 {
   margin: 0;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.2;
 }
 .ibrand small {
   color: var(--mute);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
 }
 .idesc {
   margin: 0;
-  font-size: 13.5px;
-  line-height: 1.55;
+  font-size: 12px;
+  line-height: 1.48;
   color: var(--mute);
 }
 .igrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+  gap: 8px;
 }
 .icard {
   background: var(--soft);
-  padding: 12px;
-  border-radius: 16px;
+  padding: 10px;
+  border-radius: 14px;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
 }
 .icard b {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 13px;
+  gap: 5px;
+  font-size: 11.5px;
   font-weight: 700;
   color: var(--ink);
 }
 .icard b .i {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   color: #a855f7;
   flex: none;
 }
 .icard span {
-  font-size: 12px;
-  line-height: 1.45;
+  font-size: 11px;
+  line-height: 1.4;
   color: var(--mute);
 }
 .ifoot {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 6px;
-  font-size: 12px;
+  padding-top: 4px;
+  font-size: 11px;
   font-weight: 600;
   color: var(--mute);
 }
@@ -944,118 +945,94 @@ body.imo .imodal {
   text-decoration: underline;
 }
 
-/* Theme Appearance Modal (System, Light, Dark) */
-.tscrim {
+/* App-Level Theme Switch Popover Modal (System, Light, Dark) */
+.tpop {
   position: fixed;
-  inset: 0;
-  z-index: 50;
-  background: rgba(8, 6, 20, 0.62);
-  -webkit-backdrop-filter: blur(14px) saturate(1.2);
-  backdrop-filter: blur(14px) saturate(1.2);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-body.tmo .tscrim {
-  opacity: 1;
-  pointer-events: auto;
-}
-.tmodal {
-  position: fixed;
-  z-index: 55;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -46%) scale(0.95);
-  width: min(360px, calc(100% - 24px));
-  padding: 20px;
-  border-radius: 26px;
+  z-index: 65;
+  top: 52px;
+  right: 14px;
+  width: 164px;
+  padding: 6px;
+  border-radius: 18px;
   border: none;
   outline: none;
   background: var(--bg);
-  box-shadow: 0 32px 90px -10px rgba(0, 0, 0, 0.65), 0 10px 30px -5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 22px 60px -8px rgba(0, 0, 0, 0.52), 0 4px 16px rgba(0, 0, 0, 0.2), 0 0 0 1px var(--soft2);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s 0.32s;
+  transform: translateY(-8px) scale(0.95);
+  transform-origin: top right;
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s 0.22s;
 }
-body.tmo .tmodal {
+body.tmo .tpop {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transform: translate(-50%, -50%) scale(1);
+  transform: translateY(0) scale(1);
   transition-delay: 0s;
-}
-.tlist {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 }
 .topt {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  border-radius: 16px;
-  background: var(--soft);
+  gap: 9px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: transparent;
   text-align: left;
   width: 100%;
-  transition: background 0.2s, transform 0.15s;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--mute);
+  transition: background 0.16s, color 0.16s, transform 0.14s;
 }
 .topt:hover {
-  background: var(--soft2);
+  background: var(--soft);
+  color: var(--ink);
+  transform: none;
 }
 .topt.on {
   background: var(--fill);
+  color: var(--ink);
+  font-weight: 700;
 }
 .tico {
-  width: 36px;
-  height: 36px;
-  border-radius: 11px;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
   background: var(--soft);
   display: flex;
   align-items: center;
   justify-content: center;
   flex: none;
   color: var(--ink);
+  transition: background 0.16s, color 0.16s;
 }
 .topt.on .tico {
   background: linear-gradient(135deg, #7c3aed, #ec4899);
   color: #fff;
 }
 .tico .i {
-  width: 18px;
-  height: 18px;
+  width: 15px;
+  height: 15px;
 }
 .ttxt {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
   flex: 1;
   min-width: 0;
 }
-.ttxt b {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--ink);
-}
-.ttxt small {
-  font-size: 11.5px;
-  font-weight: 500;
-  color: var(--mute);
-}
 .tchk {
-  width: 22px;
-  height: 22px;
+  width: 16px;
+  height: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #a855f7;
   opacity: 0;
   transform: scale(0.7);
-  transition: opacity 0.2s, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.18s, transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   flex: none;
 }
 .topt.on .tchk {
@@ -1063,8 +1040,8 @@ body.tmo .tmodal {
   transform: scale(1);
 }
 .tchk .i {
-  width: 18px;
-  height: 18px;
+  width: 15px;
+  height: 15px;
 }
 
 /* -------------------------------------------------------------
@@ -1256,6 +1233,10 @@ body.tmo .tmodal {
     height: 46px;
     min-height: 46px;
   }
+  .tpop {
+    top: 46px;
+    right: 10px;
+  }
   .brand svg {
     width: 30px;
     height: 30px;
@@ -1340,7 +1321,7 @@ body.tmo .tmodal {
 }
 
 @media (prefers-reduced-transparency: reduce) {
-  .stage, .panel, #pop, .tools, .tabs, .panes, .imodal {
+  .stage, .panel, #pop, .tools, .tabs, .panes, .imodal, .tpop {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
     background: var(--bg);
