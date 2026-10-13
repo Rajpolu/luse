@@ -20,28 +20,6 @@
   color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0c0b11;
-    --ink: #f3f1f8;
-    --mute: #8d8a99;
-    --glass: rgba(24, 22, 34, 0.75);
-    --soft: rgba(255, 255, 255, 0.07);
-    --soft2: rgba(255, 255, 255, 0.13);
-    --fill: rgba(139, 120, 255, 0.28);
-    --sh: 0 24px 70px -20px rgba(0, 0, 0, 0.7);
-    --b1: #3a2a8c;
-    --b2: #7a3d2a;
-    --cv: #0f0e15;
-    --gl: rgba(255, 255, 255, 0.05);
-    --gm: rgba(255, 255, 255, 0.1);
-    --gd: rgba(167, 139, 250, 0.55);
-    --ck1: #2a2833;
-    --ck2: #37343f;
-    color-scheme: dark;
-  }
-}
-
 :root[data-theme="dark"] {
   --bg: #0c0b11;
   --ink: #f3f1f8;
@@ -945,105 +923,6 @@ body.imo .imodal {
   text-decoration: underline;
 }
 
-/* App-Level Theme Switch Popover Modal (System, Light, Dark) */
-.tpop {
-  position: fixed;
-  z-index: 65;
-  top: 52px;
-  right: 14px;
-  width: 164px;
-  padding: 6px;
-  border-radius: 18px;
-  border: none;
-  outline: none;
-  background: var(--bg);
-  box-shadow: 0 22px 60px -8px rgba(0, 0, 0, 0.52), 0 4px 16px rgba(0, 0, 0, 0.2), 0 0 0 1px var(--soft2);
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transform: translateY(-8px) scale(0.95);
-  transform-origin: top right;
-  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s 0.22s;
-}
-body.tmo .tpop {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transform: translateY(0) scale(1);
-  transition-delay: 0s;
-}
-.topt {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: 8px 10px;
-  border-radius: 12px;
-  background: transparent;
-  text-align: left;
-  width: 100%;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--mute);
-  transition: background 0.16s, color 0.16s, transform 0.14s;
-}
-.topt:hover {
-  background: var(--soft);
-  color: var(--ink);
-  transform: none;
-}
-.topt.on {
-  background: var(--fill);
-  color: var(--ink);
-  font-weight: 700;
-}
-.tico {
-  width: 26px;
-  height: 26px;
-  border-radius: 8px;
-  background: var(--soft);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: none;
-  color: var(--ink);
-  transition: background 0.16s, color 0.16s;
-}
-.topt.on .tico {
-  background: linear-gradient(135deg, #7c3aed, #ec4899);
-  color: #fff;
-}
-.tico .i {
-  width: 15px;
-  height: 15px;
-}
-.ttxt {
-  flex: 1;
-  min-width: 0;
-}
-.tchk {
-  width: 16px;
-  height: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #a855f7;
-  opacity: 0;
-  transform: scale(0.7);
-  transition: opacity 0.18s, transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
-  flex: none;
-}
-.topt.on .tchk {
-  opacity: 1;
-  transform: scale(1);
-}
-.tchk .i {
-  width: 15px;
-  height: 15px;
-}
-
 /* -------------------------------------------------------------
    RESPONSIVE DESIGN (Tablets & Mobile Screen Devices)
    ------------------------------------------------------------- */
@@ -1233,10 +1112,6 @@ body.tmo .tpop {
     height: 46px;
     min-height: 46px;
   }
-  .tpop {
-    top: 46px;
-    right: 10px;
-  }
   .brand svg {
     width: 30px;
     height: 30px;
@@ -1321,7 +1196,7 @@ body.tmo .tpop {
 }
 
 @media (prefers-reduced-transparency: reduce) {
-  .stage, .panel, #pop, .tools, .tabs, .panes, .imodal, .tpop {
+  .stage, .panel, #pop, .tools, .tabs, .panes, .imodal {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
     background: var(--bg);
