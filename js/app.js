@@ -122,7 +122,10 @@ function render(){
   if(lastIcon!==S.icon){pg.innerHTML=inner(S.icon);lastIcon=S.icon;
     var kb=kebab(S.icon);$('ilink').textContent=kb;$('ilink').href='https://lucide.dev/icons/'+kb;
     document.querySelectorAll('#icons button').forEach(function(b){b.classList.toggle('on',b.dataset.n===S.icon);});}
-  var L=layout(S);pg.style.display=L.icon?'':'none';pg.setAttribute('transform','translate('+L.cx+' '+L.cy+') rotate('+S.rot+') scale('+(S.size/24)+') translate(-12 -12)');
+  var L=layout(S);
+  var sc=1-2*S.mg/100;
+  if($('psc'))$('psc').setAttribute('transform','translate(256 256) scale('+sc+') translate(-256 -256)');
+  pg.style.display=L.icon?'':'none';pg.setAttribute('transform','translate('+L.cx+' '+L.cy+') rotate('+S.rot+') scale('+(S.size/24)+') translate(-12 -12)');
   pg.setAttribute('stroke',S.bc);pg.setAttribute('stroke-width',S.bw);pg.setAttribute('fill',S.fc);pg.setAttribute('fill-opacity',S.fo/100);
   pr.setAttribute('rx',S.rad);pr.setAttribute('fill',S.gd?'url(#pgr)':S.bg);pr.style.display=S.tr?'none':'';
   $('st1').setAttribute('stop-color',S.bg);$('st2').setAttribute('stop-color',S.g2);$('pgr').setAttribute('gradientTransform','rotate('+S.ga+' .5 .5)');
@@ -161,6 +164,7 @@ function drawRoundedRect(c,x,y,w,h,r){
   r=Math.max(0,Math.min(r,w/2,h/2));
   c.beginPath();
   if(r===0){c.rect(x,y,w,h);return;}
+  if(c.roundRect){c.roundRect(x,y,w,h,r);return;}
   c.moveTo(x+r,y);
   c.arcTo(x+w,y,x+w,y+h,r);
   c.arcTo(x+w,y+h,x,y+h,r);
@@ -184,42 +188,40 @@ function drawIconVector(c,s,L){
   c.lineWidth=s.bw;
   c.lineCap='round';
   c.lineJoin='round';
+  c.miterLimit=4;
   c.fillStyle=s.fc;
   var hasFill=s.fo>0,foAlpha=s.fo/100;
   for(var i=0;i<nds.length;i++){
     var tag=nds[i][0],a=nds[i][1];
+    c.beginPath();
     if(tag==='path'){
       var p=PATH_CACHE[a.d]||(PATH_CACHE[a.d]=new Path2D(a.d));
-      if(hasFill&&a.fill!=='none'){c.globalAlpha=foAlpha;c.fill(p);c.globalAlpha=1;}
+      if(hasFill&&a.fill!=='none'){c.fillStyle=s.fc;c.globalAlpha=foAlpha;c.fill(p);c.globalAlpha=1;}
       c.stroke(p);
     }else if(tag==='circle'){
-      c.beginPath();
       c.arc(+a.cx||0,+a.cy||0,+a.r||0,0,Math.PI*2);
-      if(hasFill&&a.fill!=='none'){c.globalAlpha=foAlpha;c.fill();c.globalAlpha=1;}
+      if(hasFill&&a.fill!=='none'){c.fillStyle=s.fc;c.globalAlpha=foAlpha;c.fill();c.globalAlpha=1;}
       c.stroke();
     }else if(tag==='ellipse'){
-      c.beginPath();
       c.ellipse(+a.cx||0,+a.cy||0,+a.rx||0,+a.ry||0,0,0,Math.PI*2);
-      if(hasFill&&a.fill!=='none'){c.globalAlpha=foAlpha;c.fill();c.globalAlpha=1;}
+      if(hasFill&&a.fill!=='none'){c.fillStyle=s.fc;c.globalAlpha=foAlpha;c.fill();c.globalAlpha=1;}
       c.stroke();
     }else if(tag==='rect'){
       var rx=a.rx!=null?+a.rx:(a.ry!=null?+a.ry:0);
       drawRoundedRect(c,+a.x||0,+a.y||0,+a.width||0,+a.height||0,rx);
-      if(hasFill&&a.fill!=='none'){c.globalAlpha=foAlpha;c.fill();c.globalAlpha=1;}
+      if(hasFill&&a.fill!=='none'){c.fillStyle=s.fc;c.globalAlpha=foAlpha;c.fill();c.globalAlpha=1;}
       c.stroke();
     }else if(tag==='line'){
-      c.beginPath();
       c.moveTo(+a.x1||0,+a.y1||0);
       c.lineTo(+a.x2||0,+a.y2||0);
       c.stroke();
     }else if(tag==='polyline'||tag==='polygon'){
       var pts=String(a.points||'').trim().split(/[\s,]+/);
       if(pts.length>=4){
-        c.beginPath();
         c.moveTo(+pts[0],+pts[1]);
         for(var j=2;j<pts.length-1;j+=2)c.lineTo(+pts[j],+pts[j+1]);
         if(tag==='polygon')c.closePath();
-        if(hasFill&&tag==='polygon'&&a.fill!=='none'){c.globalAlpha=foAlpha;c.fill();c.globalAlpha=1;}
+        if(hasFill&&tag==='polygon'&&a.fill!=='none'){c.fillStyle=s.fc;c.globalAlpha=foAlpha;c.fill();c.globalAlpha=1;}
         c.stroke();
       }
     }
