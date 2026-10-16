@@ -247,21 +247,28 @@ function raster(px,mime){
       }
     }
     img.onload=function(){
+      var cv=null;
       try{
-        var cv=document.createElement('canvas');
+        cv=document.createElement('canvas');
         cv.width=cv.height=px;
         var c=cv.getContext('2d',{alpha:mime!=='image/jpeg'});
-        if(!c){cleanup();rej(new Error('context'));return;}
+        if(!c){
+          if(cv)cv.width=cv.height=0;
+          cleanup();
+          rej(new Error('context'));
+          return;
+        }
         c.imageSmoothingEnabled=true;
         c.imageSmoothingQuality='high';
         if(mime==='image/jpeg'){c.fillStyle='#ffffff';c.fillRect(0,0,px,px);}
         c.drawImage(img,0,0,px,px);
         cleanup();
         cv.toBlob(function(b){
-          cv.width=cv.height=0;
+          if(cv)cv.width=cv.height=0;
           b?res(b):rej(new Error('encode'));
         },mime,mime==='image/jpeg'?0.95:1);
       }catch(e){
+        if(cv)cv.width=cv.height=0;
         cleanup();
         rej(e);
       }
@@ -282,7 +289,11 @@ function rasterWithFallback(targetRes,mime){
     return raster(r,mime).then(function(blob){
       return{blob:blob,res:r};
     }).catch(function(){
-      return attempt(idx+1);
+      return new Promise(function(resolve){
+        setTimeout(resolve, 60);
+      }).then(function(){
+        return attempt(idx+1);
+      });
     });
   }
   return attempt(0);
