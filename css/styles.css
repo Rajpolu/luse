@@ -194,13 +194,37 @@ main {
   justify-content: center;
   padding: 0 0 50px;
   background-color: var(--cv);
-  background-image: radial-gradient(ellipse at center, transparent 40%, var(--cv) 100%);
+  background-image:
+    radial-gradient(ellipse at center, transparent 50%, var(--cv) 100%),
+    linear-gradient(var(--gm) 1px, transparent 1px),
+    linear-gradient(90deg, var(--gm) 1px, transparent 1px),
+    linear-gradient(var(--gl) 1px, transparent 1px),
+    linear-gradient(90deg, var(--gl) 1px, transparent 1px);
+  background-size: 100% 100%, 120px 120px, 120px 120px, 24px 24px, 24px 24px;
   background-position: center;
   perspective: 1100px;
   transition: background-color 0.3s;
 }
 .stage::before, .stage::after {
-  display: none;
+  content: '';
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.65;
+}
+.stage::before {
+  left: 50%;
+  top: 0;
+  bottom: 50px;
+  width: 1px;
+  background: repeating-linear-gradient(var(--gd) 0 6px, transparent 6px 12px);
+}
+.stage::after {
+  top: calc((100% - 50px) / 2);
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: repeating-linear-gradient(90deg, var(--gd) 0 6px, transparent 6px 12px);
 }
 
 #tilt {
