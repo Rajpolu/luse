@@ -194,12 +194,7 @@ main {
   justify-content: center;
   padding: 0 0 50px;
   background-color: var(--cv);
-  background-image:
-    radial-gradient(circle at center, transparent 35%, var(--cv) 95%),
-    linear-gradient(var(--gm) 1px, transparent 1px),
-    linear-gradient(90deg, var(--gm) 1px, transparent 1px);
-  background-size: 100% 100%, 64px 64px, 64px 64px;
-  background-position: center;
+  background-image: none;
   perspective: 1100px;
   transition: background-color 0.3s;
 }
