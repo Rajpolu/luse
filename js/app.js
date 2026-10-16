@@ -157,19 +157,210 @@ if(!matchMedia('(prefers-reduced-motion:reduce)').matches&&matchMedia('(hover:ho
 /* export engine */
 function seg(id,key,num){$(id).addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;this.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b);});EX[key]=num?+b.dataset.v:b.dataset.v;$('resw').style.display=EX.fmt==='svg'?'none':'';});}
 seg('fmt','fmt');seg('res','res',true);
-function msg(t){$('msg').textContent=t;clearTimeout(msg.t);msg.t=setTimeout(function(){$('msg').textContent='';},4000);}
-function save(blob,name){var u=URL.createObjectURL(blob),a=document.createElement('a');a.style.display='none';a.href=u;a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){if(a.parentNode)a.parentNode.removeChild(a);URL.revokeObjectURL(u);},4000);}
-function raster(px,mime){return new Promise(function(res,rej){
-  var svgBlob=new Blob([build(S,px,false,true)],{type:'image/svg+xml;charset=utf-8'}),u=URL.createObjectURL(svgBlob),img=new Image();
-  img.onload=function(){var go=function(){try{var cv=document.createElement('canvas');cv.width=cv.height=px;var c=cv.getContext('2d',{alpha:mime!=='image/jpeg'});
-    c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';if(mime==='image/jpeg'){c.fillStyle='#ffffff';c.fillRect(0,0,px,px);}c.drawImage(img,0,0,px,px);URL.revokeObjectURL(u);
-    cv.toBlob(function(b){cv.width=cv.height=0;b?res(b):rej(new Error('encode'));},mime,mime==='image/jpeg'?0.95:1);}catch(e){URL.revokeObjectURL(u);rej(e);}};(img.decode?img.decode().then(go,go):go());};
-  img.onerror=function(){URL.revokeObjectURL(u);rej(new Error('load'));};img.src=u;});}
-$('dl').addEventListener('click',function(){var b=this,f=EX.fmt,name='luse-'+kebab(S.icon);$('dlt').textContent='Rendering…';b.disabled=true;
-  var p=f==='svg'?Promise.resolve(new Blob([build(S,1024,false,true)],{type:'image/svg+xml;charset=utf-8'})):raster(EX.res,{png:'image/png',webp:'image/webp',jpg:'image/jpeg'}[f]);
-  p.then(function(blob){save(blob,name+(f==='svg'?'':'-'+EX.res)+'.'+f);msg('Exported '+(blob.size/1024|0)+' KB. If nothing downloaded, try Copy.');}).catch(function(){msg('Export failed – try a lower resolution.');}).then(function(){$('dlt').textContent='Export';b.disabled=false;});});
-$('cps').addEventListener('click',function(){try{navigator.clipboard.writeText(build(S,512,false,false)).then(function(){msg('SVG copied');},function(){msg('Clipboard blocked');});}catch(e){msg('Clipboard blocked');}});
-$('cpp').addEventListener('click',function(){try{var p=raster(Math.min(EX.res,2048),'image/png');if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){navigator.clipboard.write([new ClipboardItem({'image/png':p})]).then(function(){msg('PNG copied');},function(){p.then(function(blob){save(blob,'luse-'+kebab(S.icon)+'.png');msg('Saved PNG (clipboard restricted)');});});}else{p.then(function(blob){save(blob,'luse-'+kebab(S.icon)+'.png');msg('Saved PNG (clipboard restricted)');});}}catch(e){msg('Clipboard blocked');}});
+function msg(t){$('msg').textContent=t;clearTimeout(msg.t);msg.t=setTimeout(function(){$('msg').textContent='';},4500);}
+
+var IS_IOS=/(iPhone|iPad|iPod)/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+var IS_IOS_WEBVIEW=IS_IOS&&/(CriOS|FxiOS|EdgiOS|OPiOS|; wv\)|Instagram|FBAN|FBAV)/i.test(navigator.userAgent||'');
+
+function save(blob,name){
+  var file=null;
+  try{file=new File([blob],name,{type:blob.type||(name.endsWith('.svg')?'image/svg+xml':(name.endsWith('.zip')?'application/zip':'image/png'))});}catch(e){}
+  if(file&&navigator.canShare&&navigator.canShare({files:[file]})){
+    navigator.share({files:[file],title:name}).then(function(){
+      msg('Saved to device');
+    }).catch(function(err){
+      if(err&&err.name==='AbortError')return;
+      downloadFile(blob,name);
+    });
+    return;
+  }
+  downloadFile(blob,name);
+}
+
+function downloadFile(blob,name){
+  if(IS_IOS_WEBVIEW){
+    var fr=new FileReader();
+    fr.onload=function(){
+      var du=fr.result;
+      var a=document.createElement('a');
+      a.style.cssText='position:fixed;left:-9999px;top:0;width:1px;height:1px;opacity:0.01;pointer-events:none;';
+      a.href=du;
+      a.download=name;
+      a.rel='noopener';
+      var host=($('panes')&&document.body.classList.contains('mo'))?$('panes'):document.body;
+      host.appendChild(a);
+      a.click();
+      setTimeout(function(){if(a.parentNode)a.parentNode.removeChild(a);},60000);
+    };
+    fr.readAsDataURL(blob);
+    return;
+  }
+  var u=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.style.cssText='position:fixed;left:-9999px;top:0;width:1px;height:1px;opacity:0.01;pointer-events:none;';
+  a.href=u;
+  a.download=name;
+  a.rel='noopener';
+  var host=($('panes')&&document.body.classList.contains('mo'))?$('panes'):document.body;
+  host.appendChild(a);
+  a.click();
+  setTimeout(function(){
+    if(a.parentNode)a.parentNode.removeChild(a);
+    URL.revokeObjectURL(u);
+  },60000);
+}
+
+function raster(px,mime){
+  return new Promise(function(res,rej){
+    var svgStr=build(S,px,false,true);
+    var svgBlob=new Blob([svgStr],{type:'image/svg+xml;charset=utf-8'});
+    var u=URL.createObjectURL(svgBlob);
+    var img=new Image();
+    var done=false;
+    function cleanup(){if(!done){done=true;URL.revokeObjectURL(u);}}
+    img.onload=function(){
+      try{
+        var cv=document.createElement('canvas');
+        cv.width=cv.height=px;
+        var c=cv.getContext('2d',{alpha:mime!=='image/jpeg'});
+        if(!c){cleanup();rej(new Error('context'));return;}
+        c.imageSmoothingEnabled=true;
+        c.imageSmoothingQuality='high';
+        if(mime==='image/jpeg'){c.fillStyle='#ffffff';c.fillRect(0,0,px,px);}
+        c.drawImage(img,0,0,px,px);
+        cleanup();
+        cv.toBlob(function(b){
+          cv.width=cv.height=0;
+          b?res(b):rej(new Error('encode'));
+        },mime,mime==='image/jpeg'?0.95:1);
+      }catch(e){
+        cleanup();
+        rej(e);
+      }
+    };
+    img.onerror=function(){
+      cleanup();
+      rej(new Error('load'));
+    };
+    img.src=u;
+  });
+}
+
+function rasterWithFallback(targetRes,mime){
+  var resList=targetRes>2048?[targetRes,2048,1024]:(targetRes>1024?[targetRes,1024]:[targetRes]);
+  function attempt(idx){
+    if(idx>=resList.length)return Promise.reject(new Error('memory'));
+    var r=resList[idx];
+    return raster(r,mime).then(function(blob){
+      return{blob:blob,res:r};
+    }).catch(function(){
+      return attempt(idx+1);
+    });
+  }
+  return attempt(0);
+}
+
+$('dl').addEventListener('click',function(){
+  var b=this,f=EX.fmt,name='luse-'+kebab(S.icon);
+  $('dlt').textContent='Rendering…';
+  b.disabled=true;
+  if(f==='svg'){
+    var svgStr=build(S,1024,false,true);
+    var svgBlob=new Blob([svgStr],{type:'image/svg+xml;charset=utf-8'});
+    save(svgBlob,name+'.svg');
+    msg('Exported SVG');
+    $('dlt').textContent='Export';
+    b.disabled=false;
+    return;
+  }
+  var mime={png:'image/png',webp:'image/webp',jpg:'image/jpeg'}[f];
+  rasterWithFallback(EX.res,mime).then(function(out){
+    save(out.blob,name+'-'+out.res+'.'+f);
+    msg('Exported '+(out.blob.size/1024|0)+' KB ('+out.res+'px)');
+  }).catch(function(){
+    msg('Export failed – please try 1K or 512');
+  }).then(function(){
+    $('dlt').textContent='Export';
+    b.disabled=false;
+  });
+});
+
+function fallbackCopy(text,okMsg){
+  try{
+    var ta=document.createElement('textarea');
+    ta.value=text;
+    ta.setAttribute('readonly','');
+    ta.style.cssText='position:fixed;left:-9999px;top:0;opacity:0.01;';
+    var host=($('panes')&&document.body.classList.contains('mo'))?$('panes'):document.body;
+    host.appendChild(ta);
+    ta.focus();
+    ta.select();
+    ta.setSelectionRange(0,text.length);
+    var ok=document.execCommand('copy');
+    if(ta.parentNode)ta.parentNode.removeChild(ta);
+    if(ok){msg(okMsg);return;}
+  }catch(e){}
+  msg('Clipboard blocked');
+}
+
+$('cps').addEventListener('click',function(){
+  var str=build(S,512,false,false);
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(str).then(function(){
+      msg('SVG copied');
+    },function(){
+      fallbackCopy(str,'SVG copied');
+    });
+  }else{
+    fallbackCopy(str,'SVG copied');
+  }
+});
+
+$('cpp').addEventListener('click',function(){
+  rasterWithFallback(Math.min(EX.res,2048),'image/png').then(function(out){
+    var blob=out.blob;
+    if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+      navigator.clipboard.write([new ClipboardItem({'image/png':blob})]).then(function(){
+        msg('PNG copied');
+      },function(){
+        save(blob,'luse-'+kebab(S.icon)+'.png');
+        msg('Saved PNG to device');
+      });
+    }else{
+      save(blob,'luse-'+kebab(S.icon)+'.png');
+      msg('Saved PNG to device');
+    }
+  }).catch(function(){
+    msg('Copy failed');
+  });
+});
+
+$('fav').addEventListener('click',function(){
+  if(!window.JSZip){msg('Zip library unavailable');return;}
+  var z=new JSZip(),b=this;
+  b.disabled=true;
+  msg('Building favicon pack…');
+  var sizes=[16,32,48,64,128,180,192,256,512];
+  var chain=Promise.resolve();
+  sizes.forEach(function(n){
+    chain=chain.then(function(){
+      return raster(n,'image/png').then(function(bl){
+        z.file('favicon-'+n+'.png',bl);
+      });
+    });
+  });
+  chain.then(function(){
+    z.file('icon.svg',build(S,512,false,true));
+    return z.generateAsync({type:'blob'});
+  }).then(function(bl){
+    save(bl,'luse-favicons.zip');
+    msg('Favicon pack ready');
+  }).catch(function(){
+    msg('Favicon pack failed');
+  }).then(function(){
+    b.disabled=false;
+  });
+});
 /* features */
 
 $('shape').addEventListener('click',function(e){var b=e.target.closest('button');if(b){S.rad=+b.dataset.r;sched();}});
@@ -184,10 +375,9 @@ function persist(){try{localStorage.setItem('sg-saved',JSON.stringify(SAVED));}c
 $('save').addEventListener('click',function(){SAVED.unshift(JSON.parse(JSON.stringify(S)));SAVED=SAVED.slice(0,24);persist();paintSaved();msg('Saved on this device');});
 $('saved').addEventListener('click',function(e){var d=e.target.closest('b'),b=e.target.closest('button');if(d){SAVED.splice(+d.dataset.d,1);persist();paintSaved();}else if(b){Object.assign(S,DEF,SAVED[+b.dataset.i]);lastIcon='';sched();}});
 paintSaved();
-$('share').addEventListener('click',function(){var u=location.href.split('#')[0]+'#d='+encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(S)))));try{navigator.clipboard.writeText(u).then(function(){msg('Link copied');},function(){msg('Clipboard blocked');});}catch(e){msg('Clipboard blocked');}});
+$('share').addEventListener('click',function(){var u=location.href.split('#')[0]+'#d='+encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(S)))));if(navigator.share){navigator.share({title:'Luse Logo Design',url:u}).catch(function(e){if(e&&e.name==='AbortError')return;fallbackCopy(u,'Link copied');});return;}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(function(){msg('Link copied');},function(){fallbackCopy(u,'Link copied');});}else{fallbackCopy(u,'Link copied');}});
 (function(){var m=/d=([^&]+)/.exec(location.hash);if(!m)return;try{Object.assign(S,DEF,JSON.parse(decodeURIComponent(escape(atob(decodeURIComponent(m[1]))))));}catch(e){}})();
-$('fav').addEventListener('click',function(){if(!window.JSZip){msg('Zip library unavailable');return;}var z=new JSZip(),b=this;b.disabled=true;msg('Building favicon pack…');
-  Promise.all([16,32,48,64,128,180,192,256,512].map(function(n){return raster(n,'image/png').then(function(bl){z.file('favicon-'+n+'.png',bl);});})).then(function(){z.file('icon.svg',build(S,512,false,true));return z.generateAsync({type:'blob'});}).then(function(bl){save(bl,'luse-favicons.zip');msg('Favicon pack ready');}).catch(function(){msg('Pack failed');}).then(function(){b.disabled=false;});});
+
 var th='light';try{th=localStorage.getItem('sg-th')==='dark'?'dark':'light';}catch(e){}
 function setTh(){
   document.documentElement.setAttribute('data-theme',th);
