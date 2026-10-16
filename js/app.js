@@ -53,9 +53,22 @@ var IB={};
 function ibox(n){if(IB[n])return IB[n];var o={w:20,h:20,cx:12,cy:12};try{var sv=document.createElementNS('http://www.w3.org/2000/svg','svg');sv.setAttribute('style','position:absolute;left:-9999px;width:0;height:0;visibility:hidden');sv.innerHTML='<g>'+inner(n)+'</g>';document.body.appendChild(sv);var b=sv.firstChild.getBBox();document.body.removeChild(sv);if(b.width>0&&b.height>0)o={w:b.width,h:b.height,cx:b.x+b.width/2,cy:b.y+b.height/2};}catch(e){}return IB[n]=o;}
 function ic(n){return'<svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+inner(n)+'</svg>';}
 function esc(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function gradCoords(ga){
+  var rad=ga*Math.PI/180;
+  var L=0.5*(Math.abs(Math.cos(rad))+Math.abs(Math.sin(rad)));
+  var dx=L*Math.cos(rad),dy=L*Math.sin(rad);
+  return{
+    x1:((0.5-dx)*100).toFixed(2)+'%',
+    y1:((0.5-dy)*100).toFixed(2)+'%',
+    x2:((0.5+dx)*100).toFixed(2)+'%',
+    y2:((0.5+dy)*100).toFixed(2)+'%'
+  };
+}
 function build(s,px,noText,embedCss){s=Object.assign({},DEF,s);var L=layout(s),id='bg'+(++uid),sc=1-2*s.mg/100,f=s.gd?'url(#'+id+')':s.bg;
   var styleBlock=(embedCss&&L.text&&EMBED_FONTS)?'<style>'+EMBED_FONTS+'</style>':'';
-return'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="'+(px||512)+'" height="'+(px||512)+'" shape-rendering="geometricPrecision"><defs>'+styleBlock+(s.gd?'<linearGradient id="'+id+'" gradientTransform="rotate('+s.ga+' .5 .5)"><stop offset="0" stop-color="'+s.bg+'"/><stop offset="1" stop-color="'+s.g2+'"/></linearGradient>':'')+'</defs><g transform="translate(256 256) scale('+sc+') translate(-256 -256)">'+(s.tr?'':'<rect width="512" height="512" rx="'+s.rad+'" fill="'+f+'"/>')+(L.icon?'<g '+gAttrs(s,L.cy,L.cx)+'>'+inner(s.icon)+'</g>':'')+(noText?'':txtEl(s,L))+'</g></svg>';}
+  var gc=gradCoords(s.ga);
+  var gradEl=s.gd?'<linearGradient id="'+id+'" x1="'+gc.x1+'" y1="'+gc.y1+'" x2="'+gc.x2+'" y2="'+gc.y2+'"><stop offset="0" stop-color="'+s.bg+'"/><stop offset="1" stop-color="'+s.g2+'"/></linearGradient>':'';
+return'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="'+(px||512)+'" height="'+(px||512)+'" shape-rendering="geometricPrecision"><defs>'+styleBlock+gradEl+'</defs><g transform="translate(256 256) scale('+sc+') translate(-256 -256)">'+(s.tr?'':'<rect width="512" height="512" rx="'+s.rad+'" fill="'+f+'"/>')+(L.icon?'<g '+gAttrs(s,L.cy,L.cx)+'>'+inner(s.icon)+'</g>':'')+(noText?'':txtEl(s,L))+'</g></svg>';}
 /* scrubbers */
 var SL=[['size','Size',100,460,1,' px'],['rot','Rotate',-180,180,1,'°'],['bw','Border width',0.5,4,0.1,' px'],['fo','Fill opacity',0,100,1,'%'],['rad','Roundness',0,256,1,'','slr'],['ga','Gradient angle',0,360,1,'°','slg'],['ls','Letter spacing',-10,40,1,'%','slt'],['tz','Text scale',50,130,1,'%','slt'],['mg','Export margin',0,30,1,'%','slm']],scr={};
 SL.forEach(function(d){
@@ -128,7 +141,14 @@ function render(){
   pg.style.display=L.icon?'':'none';pg.setAttribute('transform','translate('+L.cx+' '+L.cy+') rotate('+S.rot+') scale('+(S.size/24)+') translate(-12 -12)');
   pg.setAttribute('stroke',S.bc);pg.setAttribute('stroke-width',S.bw);pg.setAttribute('fill',S.fc);pg.setAttribute('fill-opacity',S.fo/100);
   pr.setAttribute('rx',S.rad);pr.setAttribute('fill',S.gd?'url(#pgr)':S.bg);pr.style.display=S.tr?'none':'';
-  $('st1').setAttribute('stop-color',S.bg);$('st2').setAttribute('stop-color',S.g2);$('pgr').setAttribute('gradientTransform','rotate('+S.ga+' .5 .5)');
+  $('st1').setAttribute('stop-color',S.bg);$('st2').setAttribute('stop-color',S.g2);
+  var gc=gradCoords(S.ga);
+  var pgr=$('pgr');
+  pgr.removeAttribute('gradientTransform');
+  pgr.setAttribute('x1',gc.x1);
+  pgr.setAttribute('y1',gc.y1);
+  pgr.setAttribute('x2',gc.x2);
+  pgr.setAttribute('y2',gc.y2);
   var pt=$('pt'),F=FONTS[S.ff]||FONTS.sans;pt.textContent=L.text;pt.style.display=L.text?'':'none';
   if(L.text){var sp=S.ls/100*L.fs;pt.setAttribute('x',256+sp/2);pt.setAttribute('y',L.ty);pt.setAttribute('font-size',L.fs);pt.setAttribute('font-family',F.f);pt.setAttribute('font-weight',S.fw);pt.setAttribute('letter-spacing',sp);pt.setAttribute('fill',S.tc);}
   document.body.dataset.mode=S.mode;document.body.dataset.gd=S.gd?1:0;
@@ -217,7 +237,15 @@ function raster(px,mime){
     var u=URL.createObjectURL(svgBlob);
     var img=new Image();
     var done=false;
-    function cleanup(){if(!done){done=true;URL.revokeObjectURL(u);}}
+    function cleanup(){
+      if(!done){
+        done=true;
+        URL.revokeObjectURL(u);
+        img.onload=null;
+        img.onerror=null;
+        img.src='';
+      }
+    }
     img.onload=function(){
       try{
         var cv=document.createElement('canvas');
@@ -247,7 +275,7 @@ function raster(px,mime){
 }
 
 function rasterWithFallback(targetRes,mime){
-  var resList=targetRes>2048?[targetRes,2048,1024]:(targetRes>1024?[targetRes,1024]:[targetRes]);
+  var resList=targetRes===4096?[4096,3072,2048,1024]:(targetRes>1024?[targetRes,1024]:[targetRes]);
   function attempt(idx){
     if(idx>=resList.length)return Promise.reject(new Error('memory'));
     var r=resList[idx];
